@@ -83,21 +83,24 @@ const PredictionForm = () => {
             HasCoSigner: Number(formData.HasCoSigner),
         };
 
-        try {
-    const API_URL = import.meta.env.VITE_API_URL;
+        const API_URL = import.meta.env.VITE_API_URL;
 
-    const response = await axios.post(
-        `${API_URL}/predict`,
-        payload
-    );
+if (!API_URL) {
+  console.error("VITE_API_URL is undefined");
+}
 
-    setResult(response.data);
-    setStep(4);
+try {
+  const response = await axios.post(
+    `${API_URL}/predict`,
+    payload
+  );
+  setResult(response.data);
+  setStep(4);
 } catch (err) {
-    console.error(err);
-    setError('Neural link failed. Ensure the CrediVault core engine is active.');
+  console.error("Axios error:", err);
+  setError("Neural link failed. Ensure the CrediVault core engine is active.");
 } finally {
-    setLoading(false);
+  setLoading(false);
 }
 
     const inputClasses = "w-full p-4 bg-slate-900/40 border border-white/5 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all pl-12 shadow-inner font-medium text-sm";
