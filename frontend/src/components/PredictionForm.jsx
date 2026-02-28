@@ -92,13 +92,18 @@ if (!API_URL) {
 try {
   const response = await axios.post(
     `${API_URL}/predict`,
-    payload
+    payload,
+    { timeout: 60000 }
   );
   setResult(response.data);
   setStep(4);
 } catch (err) {
   console.error("Axios error:", err);
-  setError("Neural link failed. Ensure the CrediVault core engine is active.");
+  if (err.code === 'ECONNABORTED') {
+    setError("Request timeout. The server may be slow to respond. Please try again.");
+  } else {
+    setError("Neural link failed. Ensure the CrediVault core engine is active.");
+  }
 } finally {
   setLoading(false);
 }
@@ -361,7 +366,7 @@ try {
                                             {loading ? (
                                                 <>
                                                     <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
-                                                    <span>Synthesizing...</span>
+                                                    <span>Activating Core Engine...</span>
                                                 </>
                                             ) : (
                                                 <>
