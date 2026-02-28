@@ -102,6 +102,7 @@ try {
 } finally {
   setLoading(false);
 }
+    };
 
     const inputClasses = "w-full p-4 bg-slate-900/40 border border-white/5 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all pl-12 shadow-inner font-medium text-sm";
     const labelClasses = "block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2 ml-1";
@@ -459,7 +460,6 @@ try {
             </motion.div>
         </div>
     );
-};
 };
 
 export default PredictionForm;
